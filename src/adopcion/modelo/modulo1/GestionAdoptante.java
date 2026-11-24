@@ -1,10 +1,8 @@
 package adopcion.modelo.modulo1;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import adopcion.utilitario.Lista;
 import adopcion.utilitario.Valida;
-import adopcion.modelo.modulo1.Adoptante;
 
 public class GestionAdoptante {
     private Scanner sc = new Scanner(System.in);
@@ -200,7 +198,7 @@ public class GestionAdoptante {
     }
 
     // Iniciar sesión
-    public void iniciarSesion() {
+    public Adoptante iniciarSesion() {
 
         System.out.println("\n--- INICIO DE SESIÓN ---");
 
@@ -210,13 +208,13 @@ public class GestionAdoptante {
 
         if (adoptante == null) {
             System.out.println("\nNo estás registrado. Por favor, registrar usuario.");
-            return;
+            return adoptante;
         }
 
         // Verificar primero si el perfil está activo
         if (adoptante.getEstadoPerfil() != 1) {
             System.out.println("\nError: Tu perfil se encuentra inactivo o inhabilitado. No puedes ingresar al sistema.");
-            return;
+            return adoptante;
         }
 
         String contrasena;
@@ -231,6 +229,7 @@ public class GestionAdoptante {
         } while (!adoptante.getContrasena().equals(contrasena));
 
         System.out.println("\nInicio de sesión exitoso. Bienvenido al sistema.");
+        return adoptante;
     }
 
     // Menú principal
