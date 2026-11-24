@@ -16,7 +16,6 @@ import adopcion.modelo.modulo4.CitaSeguimiento;
 import adopcion.modelo.modulo5.Vacuna;
 
 import java.util.Scanner;
-//Main
 
 public class MainAdopcion {
     static void main(String[] args) {
