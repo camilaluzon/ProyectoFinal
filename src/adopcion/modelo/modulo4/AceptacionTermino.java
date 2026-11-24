@@ -9,7 +9,7 @@ public class AceptacionTermino {
     private boolean aceptacionTerminos;
     private String fechaAceptacion;
 
-    public AceptacionTerminos(String cedulaAdoptante, String codigoMascota, String versionTerminos) {
+    public AceptacionTermino(String cedulaAdoptante, String codigoMascota) {
         this.cedulaAdoptante = cedulaAdoptante;
         this.codigoMascota = codigoMascota;
         this.fechaAceptacion = LocalDateTime.now().toString();

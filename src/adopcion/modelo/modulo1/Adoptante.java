@@ -9,7 +9,7 @@ public class Adoptante {
     private int tipoVivienda;//* */
     private double espacioInterior;
     private double espacioExterior;
-    private double horasFueraCasa;
+    private int horasFueraCasa;
     private boolean experienciaMascotas;//* */
     private int tipoMascotaAnterior;//* */
     private double presupuesto;
@@ -21,7 +21,7 @@ public class Adoptante {
     public Adoptante(String cedula, String nombreCompleto, String telefono,
                      String contrasena, int tipoVivienda,
                      double espacioInterior, double espacioExterior,
-                     double horasFueraCasa, boolean experienciaMascotas,
+                     int horasFueraCasa, boolean experienciaMascotas,
                      int tipoMascotaAnterior, double presupuesto,
                      int numeroHijos, String respuestaSeguridad){
 
@@ -70,7 +70,7 @@ public class Adoptante {
         return espacioExterior;
     }
 
-    public double getHorasFueraCasa() {
+    public int getHorasFueraCasa() {
         return horasFueraCasa;
     }
 
@@ -128,7 +128,7 @@ public class Adoptante {
         this.espacioExterior = espacioExterior;
     }
 
-    public void setHorasFueraCasa(double horasFueraCasa) {
+    public void setHorasFueraCasa(int horasFueraCasa) {
         this.horasFueraCasa = horasFueraCasa;
     }
 

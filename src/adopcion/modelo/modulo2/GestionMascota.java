@@ -10,6 +10,7 @@ package adopcion.modelo.modulo2;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import adopcion.utilitario.Lista;
 import adopcion.utilitario.Valida;
@@ -167,7 +168,7 @@ public class GestionMascota {
         }
 
         if (Valida.validarRespuestaSiNo("\n¿Está seguro de eliminar su perfil? (si/no)").equalsIgnoreCase("si")) {
-            String motivo=Valida.leerObservaciones("\nIngrese el motivo de retirada")
+            String motivo=Valida.leerObservaciones("\nIngrese el motivo de retirada");
             m.setEstado(3);
             m.setMotivoEliminacion(motivo);
             System.out.println("\nLa mascota ha sido retirada correctamente del catálogo");
@@ -178,28 +179,230 @@ public class GestionMascota {
     }
 
     //Compatibilidad
-    public double calcularCompatibilidad(Adoptante a, Mascota m) {
-        if (a.isTieneNinos() && m.getNivelSociabilidad() == 1) {
-            return 0;
+    public static int calcularCompatibilidad(Adoptante adoptante, Mascota mascota) {
+
+        // Validaciones criticas y minimas que retornan 0
+        if (mascota.getEstado()!=1 || adoptante.getEstadoPerfil()!=1) {
+            return 0;}
+
+        if (adoptante.getNumeroHijos()>0 && mascota.getNivelSociabilidad()==1) {
+            return 0;}
+
+        if (mascota.isPresenciaEnfermedades() && adoptante.getPresupuesto()<45) {
+            return 0;}
+
+        if (mascota.getEdad() > 10 && adoptante.getPresupuesto()<50) {
+            return 0;}
+
+        if (mascota.getNivelEnergia()>3 && adoptante.getHorasFueraCasa()>16 && adoptante.getEspacioExterior() < 4) {
+            return 0;}
+
+        int puntos = 0;
+
+        //  Vivienda, Especie y Tamaño
+        int vivienda = adoptante.getTipoVivienda();
+        int especie = mascota.getEspecie();
+        double tamano = mascota.getTamanoAproximado();
+
+        if (vivienda == 1) { // Casa
+            if (especie == 2) { puntos += 20;      // Gato
+            }else { puntos += 15;} // Perro
+        } else if (vivienda == 2) { // Departamento
+            if (especie == 2) {
+                puntos += 20; // Gato
+            } else if (especie == 1) {
+                puntos += 10; // Perro
+                if (tamano <= 40){ puntos += 10;
+                }else if (tamano <= 50) {puntos += 5;}
+                // mayor a 51 suma 0
+            }
+        } else { // Hacienda
+            puntos += 20; // Perro o Gato
         }
 
-        double pts = 0;
-
-        if (m.getNivelSociabilidad() == 3) {
-            pts += 35;
-        } else if (m.getNivelSociabilidad() == 2) {
-            pts += 25;
-        } else {
-            pts += 20;
+        // Espacio interior
+        double espInterior = adoptante.getEspacioInterior();
+        if (espInterior <= 34) {
+            puntos -= 5;
+        } else if (espInterior <= 45) {
+            if (tamano > 50) puntos -= 5;
+            // 0 a 50 suma 0
+        } else { // >= 46
+            puntos += 5;
         }
 
-        if (m.getEspecie().equalsIgnoreCase("gato") || m.getTamanoAproximado() <= 40) {
-            pts += 35;
-        } else if (a.getEspacioDisponible().equalsIgnoreCase("Grande")) {
-            pts += 35;
-        } else if (a.getEspacioDisponible().equalsIgnoreCase("Mediano")) {
-            pts += 25;
-        } else {
-            pts += 10;
+        // Espacio exterior
+        if (adoptante.getEspacioExterior() < 4) {
+            puntos -= 5;
         }
+
+        // Experiencia previa
+        if (adoptante.isExperienciaMascotas()) {
+            if (especie == 2 && puntos > 15){ puntos += 5;// Gato
+            }else if (especie == 1 && puntos > 5) {puntos += 5;}// Perro
+        }
+
+        // Presupuesto
+        double presupuesto = adoptante.getPresupuesto();
+        if (presupuesto < 45) {
+            puntos -= 5;
+        } else if (presupuesto > 55) {
+            puntos += 5;
+            if (mascota.getEdad() > 10) puntos += 10;
+            if (tamano > 50) puntos += 10;
+            if (presupuesto > 65 && mascota.isPresenciaEnfermedades()) puntos += 10;
+        }
+
+        // Niños y Sociabilidad
+        int ninos = adoptante.getNumeroHijos();
+        int sociabilidad = mascota.getNivelSociabilidad();
+
+        if (ninos == 1) {
+            if (sociabilidad >= 3){ puntos += 5;
+            }else if (sociabilidad == 1) {puntos -= 5;}
+        } else if (ninos > 1) {
+            if (sociabilidad >= 3) {puntos += 10;
+            }else if (sociabilidad == 2){ puntos -= 5;
+            }else {puntos -= 10;}
+        }
+
+        int horas = adoptante.getHorasFueraCasa();
+        int energia = mascota.getNivelEnergia();
+
+        if (horas > 16) {
+            puntos -= 5;
+        } else if (horas >= 12 && horas <= 16) {
+            // Suma 0 por horas, pero si energía (3 o 4) resta 5
+            if (energia >= 3) {
+                puntos -= 5;
+            }
+        } else if (horas >= 10 && horas <= 11) {
+            puntos += 5;
+        } else if (horas >= 0 && horas <= 9) {
+            puntos += 10;
+            // Si si energía (3 o 4) suma 5
+            if (energia >= 3) {
+                puntos += 5;
+            }
+        }
+
+        return puntos;
+    }
+
+    public void generarReporteCompatibilidad (Adoptante adoptante){
+
+        if (adoptante.getEstadoPerfil()==3) {
+            System.out.println("\nEl adoptante esta ihabilitado y no puede adoptar");
+            return;}
+
+        List<Mascota> compatibles = new ArrayList<>();
+
+        for (Mascota m : Lista.getMascotas()) {
+            if (m.getEstado()==1 && calcularCompatibilidad(adoptante, m) >= 20){
+                compatibles.add(m);
+            }
+        }
+
+        if (compatibles.isEmpty()) {
+            System.out.println("\nNo se encontraron mascotas compatibles para este adoptante.");
+            return;
+        }
+
+        //Ordenar de mayor a menor
+        compatibles.sort((m1, m2) -> Integer.compare(
+                calcularCompatibilidad(adoptante, m2),
+                calcularCompatibilidad(adoptante, m1)
+        ));
+
+        // Mostrar mascotas
+        System.out.println("\n--- REPORTE DE COMPATIBILIDAD ---");
+
+        for (Mascota m : compatibles) {
+            int puntos = calcularCompatibilidad(adoptante, m);
+            String nivel;
+            if (puntos>=35) {
+                nivel="\ncompatibilidad Alta (Ideal)";
+            }else{
+                nivel="\ncompatibilidad Media (Apta) ";
+            }
+            System.out.println("\nPuntaje: " + puntos + " puntos con una " + nivel);
+            m.mostrarInformacion();
+        }
+    }
+
+    public void realizarAdopcion(String cedulaAdoptante, String codigoMascota){
+        System.out.println("\n--- PROCESO DE ADOPCIÓN ---");
+
+        // Buscar adoptante
+        Adoptante adoptante = Lista.buscarAdoptante(cedulaAdoptante);
+
+        if (adoptante == null) {
+            System.out.println("\nError: El adoptante no se encuentra registrado.");
+            return;
+        }
+
+        // Verificar que el adoptante esté activo
+        if (adoptante.getEstadoPerfil() != 1) {
+            System.out.println("\nError: El adoptante no está habilitado para realizar adopciones.");
+            return;
+        }
+
+        // Buscar mascota
+        Mascota mascota = Lista.buscarMascota(codigoMascota);
+
+        if (mascota == null) {
+            System.out.println("\nError: La mascota no se encuentra registrada.");
+            return;
+        }
+
+        // Verificar disponibilidad de la mascota
+        if (mascota.getEstado() != 1) {
+            System.out.println("\nError: La mascota no se encuentra disponible para adopción.");
+            return;
+        }
+
+        // Verificar que no exista una adopción anterior entre ambos
+        for (AceptacionTermino adopcion : Lista.getAdopcion()) {
+
+            if (adopcion.getCedulaAdoptante().equals(cedulaAdoptante) && adopcion.getCodigoMascota().equalsIgnoreCase(codigoMascota)) {
+                System.out.println("\nError: Ya existe una aceptación registrada para esta adopción.");
+                return;
+            }
+        }
+
+        // Mostrar términos y condiciones
+        System.out.println("\n--- TÉRMINOS Y CONDICIONES DE ADOPCIÓN ---");
+        System.out.println("\nDeclaro que he leído y acepto el compromiso de tenencia responsable.");
+        System.out.println("\nMe comprometo a brindar los cuidados necesarios a la mascota.");
+        System.out.println("\nAcepto las condiciones legales establecidas por el refugio.");
+
+        // Solicitar aceptación
+        String respuesta = Valida.validarRespuestaSiNo("\n¿Acepta los términos y condiciones? (si/no)");
+
+        // Crear registro de aceptación
+        AceptacionTermino aceptacion = new AceptacionTermino(
+                cedulaAdoptante,
+                codigoMascota
+        );
+
+        // Registrar respuesta
+        aceptacion.registrarAceptacion(respuesta);
+
+        // Comprobar aceptación
+        if (!aceptacion.validarTerminos()) {System.out.println("\nLa adopción no se ha realizado.");
+            return;
+        }
+
+        // Guardar aceptación en la lista compartida
+        Lista.getAdopcion().add(aceptacion);
+
+        // Cambiar estado de mascota a Adoptada
+        mascota.setEstado(2);
+
+        System.out.println("\n¡Adopción realizada exitosamente!");
+        System.out.println("\nAdoptante: " + adoptante.getNombreCompleto());
+        System.out.println("\nMascota: " + mascota.getNombre());
+        System.out.println("\nCódigo de mascota: " + mascota.getCodigoM());
+        System.out.println("\nFecha de aceptación: " + aceptacion.getFechaAceptacion());
+    }
 }

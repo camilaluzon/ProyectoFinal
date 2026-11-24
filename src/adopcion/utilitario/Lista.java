@@ -3,6 +3,7 @@ package adopcion.utilitario;
 import java.util.ArrayList;
 import adopcion.modelo.modulo1.Adoptante;
 import adopcion.modelo.modulo2.Mascota;
+import adopcion.modelo.modulo3.Devolucion;
 import adopcion.modelo.modulo4.AceptacionTermino;
 import adopcion.modelo.modulo5.Vacuna;
 
@@ -12,7 +13,7 @@ public class Lista {
     private static ArrayList<Mascota> mascotas = new ArrayList<>();
     private static ArrayList<Vacuna> vacunas = new ArrayList<>();
     private static ArrayList<AceptacionTermino> adopciones = new ArrayList<>();
-    // private ArrayList<Devoluciones> devoluciones = new ArrayList<>();
+    private static ArrayList<Devolucion> devoluciones = new ArrayList<>();
 
     // Getters para que cualquier módulo acceda a las listas
     public static ArrayList<Adoptante> getAdoptantes() {
@@ -23,12 +24,16 @@ public class Lista {
         return mascotas;
     }
 
-    public static ArrayList<AceptacionTermino> getAdopciones() {
+    public static ArrayList<AceptacionTermino> getAdopcion() {
         return adopciones;
     }
 
     public static ArrayList<Vacuna> getVacunas() {
         return vacunas;
+    }
+
+    public static ArrayList<Devolucion> getDevolucion() {
+        return devoluciones;
     }
 
     // Métodos de búsqueda centralizados (así no los repiten en cada clase)
@@ -54,7 +59,7 @@ public class Lista {
 
         for (Vacuna v : vacunas) {
 
-            if (v.getMascota().getCodigo().equalsIgnoreCase(mascota.getCodigo()) &&
+            if (v.getMascota().getCodigoM().equalsIgnoreCase(mascota.getCodigoM()) &&
                     v.getNombreVacuna().equalsIgnoreCase(nombreVacuna) &&
                     v.getFechaAplicacion() == fechaAplicacion) {
 
@@ -85,6 +90,28 @@ public class Lista {
         }
 
         return null;
+    }
+
+    public static ArrayList<Mascota> buscarMascotasAdoptadas(String cedula) {
+
+        ArrayList<Mascota> mascotasAdoptadas = new ArrayList<>();
+
+        for (AceptacionTermino a : adopciones) {
+
+            if (a.getCedulaAdoptante().equalsIgnoreCase(cedula)) {
+
+                Mascota mascota = buscarMascota(a.getCodigoMascota());
+
+                if (mascota != null &&
+                        mascota.getEstado() == 2 &&
+                        !mascotasAdoptadas.contains(mascota)) {
+
+                    mascotasAdoptadas.add(mascota);
+                }
+            }
+        }
+
+        return mascotasAdoptadas;
     }
 
     // Cargar datos de prueba
