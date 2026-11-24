@@ -10,12 +10,12 @@ import adopcion.utilitario.Valida;
 public class Devolucion {
     private static int contador = 1;
 
-    private String  codigoDe;
+    private String codigoDe;
     private LocalDate fechaDe;
     private String motivoDe;
     private int nivelGra;
     private String resultadoEva;
-    private static Adoptante adoptante;
+    private Adoptante adoptante;
     private Mascota mascota;
 
     public Devolucion(Adoptante adoptante, Mascota mascota, int numMotivo) {
@@ -71,7 +71,14 @@ public class Devolucion {
 
     public static void registrarDevolucion() {
 
-        String cedula = Valida.leerString("\nIngrese la cédula del adoptante:");
+        String cedula = Valida.leerDiezDigitos("\nIngrese la cédula del adoptante");
+
+        Adoptante adoptante = Lista.buscarAdoptante(cedula);
+
+        if (adoptante == null) {
+            System.out.println("Error: el adoptante no se encuentra registrado.");
+            return;
+        }
 
         ArrayList<Mascota> mascotasAdoptadas = Lista.buscarMascotasAdoptadas(cedula);
 
@@ -80,9 +87,10 @@ public class Devolucion {
             return;
         }
 
-        Mascota mascota = null;
+        String codigoM = Valida.leerString("\nIngrese el código de la mascota a devolver");
+        Mascota mascota = Lista.buscarMascota(codigoM);
 
-        if (mascota.getEstado() != 2) {
+        if (mascota == null || mascota.getEstado() != 2) {
             System.out.println("Error: la mascota no se encuentra actualmente adoptada.");
             return;
         }
@@ -91,7 +99,7 @@ public class Devolucion {
 
         mostrarMotivos();
 
-        int numMotivo = Valida.leerIntervalo("\nSeleccione el motivo de devolución:",1,6);
+        int numMotivo = Valida.leerIntervalo("\nSeleccione el motivo de devolución", 1, 6);
 
         // Crear registro de devolución
         Devolucion nuevaDevolucion = new Devolucion(
@@ -103,9 +111,7 @@ public class Devolucion {
         System.out.println("Motivo de devolución registrado y evaluado correctamente.");
 
         if (nuevaDevolucion.getNivelGra() > 2) {
-
             adoptante.setEstadoPerfil(3);
-
             nuevaDevolucion.setResultadoEva("Adoptante inhabilitado para futuras adopciones.");
         } else {
             nuevaDevolucion.setResultadoEva("Adoptante continúa habilitado para futuras adopciones.");

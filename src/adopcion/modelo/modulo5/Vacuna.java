@@ -45,7 +45,6 @@ public class Vacuna {
     }
 
     // Getters y Setters
-
     public Mascota getMascota() {
         return mascota;
     }
@@ -111,7 +110,6 @@ public class Vacuna {
     }
 
     // Métodos UML
-
     public static String seleccionarVacuna(Mascota mascota) {
 
         int opcion;
@@ -130,18 +128,18 @@ public class Vacuna {
 
             mVacunasG();
 
-            opcion = Valida.leerIntervalo("\nSeleccione una vacuna:", 1, 3);
+            opcion = Valida.leerIntervalo("\nSeleccione una vacuna", 1, 3);
 
             if (opcion == 1) return "Triple felina";
             if (opcion == 2) return "Rabia";
         }
 
-        return Valida.leerString("\nIngrese el nombre de la vacuna adicional:");
+        return Valida.leerString("\nIngrese el nombre de la vacuna adicional");
     }
 
     public void registrarVacuna() {
 
-        String codigoMascota = Valida.leerString("\nIngrese el código de la mascota:");
+        String codigoMascota = Valida.leerString("\nIngrese el código de la mascota");
 
         Mascota mascota = Lista.buscarMascota(codigoMascota);
 
@@ -152,7 +150,7 @@ public class Vacuna {
 
         String nombreVacuna = seleccionarVacuna(mascota);
 
-        int fechaAplicacion = Valida.leerIntervalo("\nIngrese el año de aplicación:",2001,Year.now().getValue());
+        int fechaAplicacion = Valida.leerIntervalo("\nIngrese el año de aplicación", 2001, Year.now().getValue());
 
         LocalDate proximaDosis = LocalDate.now().plusMonths(3);
 
@@ -191,7 +189,7 @@ public class Vacuna {
 
     public static void consultarVacuna() {
 
-        String idVacuna = Valida.leerString("\nIngrese el ID de la vacuna:");
+        String idVacuna = Valida.leerString("\nIngrese el ID de la vacuna");
 
         Vacuna vacuna = Lista.buscarVacunaPorId(idVacuna);
 
@@ -219,7 +217,7 @@ public class Vacuna {
 
         Vacuna vacunaEncontrada = Lista.buscarVacunaPorId(idVacuna);
 
-        if (vacunaEncontrada == null ||!vacunaEncontrada.getMascota().getCodigoM().equalsIgnoreCase(codigoMascota)) {
+        if (vacunaEncontrada == null || !vacunaEncontrada.getMascota().getCodigoM().equalsIgnoreCase(codigoMascota)) {
             System.out.println("\nError: el registro solicitado no se encuentra en el sistema.");
             return;
         }
@@ -231,11 +229,11 @@ public class Vacuna {
 
         String nombreVacuna = Valida.leerString("\nIngrese el nuevo nombre de la vacuna");
 
-        int fechaAplicacion = Valida.leerIntervalo("\nIngrese el nuevo año de aplicación:",2001,Year.now().getValue());
+        int fechaAplicacion = Valida.leerIntervalo("\nIngrese el nuevo año de aplicación", 2001, Year.now().getValue());
 
-        int fechaRefuerzo = Valida.leerIntervalo("\nIngrese el nuevo año de refuerzo:",fechaAplicacion,fechaAplicacion+1);
+        int fechaRefuerzo = Valida.leerIntervalo("\nIngrese el nuevo año de refuerzo", fechaAplicacion, fechaAplicacion + 1);
 
-        String observacion = Valida.leerObservaciones("\nIngrese la nueva observación (opcional):");
+        String observacion = Valida.leerObservaciones("\nIngrese la nueva observación (opcional)");
 
         Vacuna duplicada = Lista.buscarVacuna(
                 mascota,
@@ -290,7 +288,7 @@ public class Vacuna {
 
         Vacuna vacunaEncontrada = Lista.buscarVacunaPorId(idVacuna);
 
-        if (vacunaEncontrada == null ||!vacunaEncontrada.getMascota().getCodigoM().equalsIgnoreCase(mascota.getCodigoM())) {
+        if (vacunaEncontrada == null || !vacunaEncontrada.getMascota().getCodigoM().equalsIgnoreCase(mascota.getCodigoM())) {
             System.out.println("\nError: el registro solicitado no se encuentra en el sistema.");
             return;
         }
@@ -309,10 +307,12 @@ public class Vacuna {
         }
 
         String motivo = Valida.leerObservaciones("\nIngrese el motivo de eliminación");
-
+        vacunaEncontrada.setEstado(false);
+        vacunaEncontrada.setMotivoEliminacion(motivo);
+        System.out.println("\nVacuna eliminada (inactivada) correctamente.");
     }
 
-    public static void mVacunasP(){
+    public static void mVacunasP() {
         System.out.println("\n --- VACUNAS ESENCIALES PARA PERROS ---");
         System.out.println("1. Polivalente canina (Moquillo, Adenovirus y Parvovirus)");
         System.out.println("2. Rabia");
@@ -320,12 +320,11 @@ public class Vacuna {
         System.out.println("4. Agregar otra vacuna (Extra)");
     }
 
-    public static void mVacunasG(){
-        System.out.println("\n --- VACUNAS ESENCIALES PARA PERROS ---");
-        System.out.println("1. Polivalente canina (Moquillo, Adenovirus y Parvovirus)");
+    public static void mVacunasG() {
+        System.out.println("\n --- VACUNAS ESENCIALES PARA GATOS ---");
+        System.out.println("1. Triple felina");
         System.out.println("2. Rabia");
-        System.out.println("3. Leptospirosis");
-        System.out.println("4. Agregar otra vacuna (Extra)");
+        System.out.println("3. Agregar otra vacuna (Extra)");
     }
 
     public void mostrarInformacionVacunas() {

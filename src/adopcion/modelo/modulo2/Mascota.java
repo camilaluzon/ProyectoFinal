@@ -11,13 +11,13 @@ public class Mascota {
     private static int contador = 1;
     private String codigom;
     private String nombre;
-    private int especie;//
+    private int especie;
     private int edad;
     private int tamanoAproximado;
     private boolean presenciaEnfermedades;
-    private int descripcionEnfermedad;//
-    private int nivelEnergia;//
-    private int nivelSociabilidad;//
+    private int descripcionEnfermedad;
+    private int nivelEnergia;
+    private int nivelSociabilidad;
     private int estado;
     private String motivoEliminacion;
 
@@ -121,7 +121,7 @@ public class Mascota {
         this.motivoEliminacion = motivoEliminacion;
     }
 
-    public void mostrarInformacion(){
+    public void mostrarInformacion() {
         String especiem;
         System.out.println("\nNombre: " + nombre);
         if (especie == 1) {
@@ -136,7 +136,7 @@ public class Mascota {
         System.out.println("\nPresencia de enfermedades: " + presencia);
         String descripcion = "";
         if (especie == 1) {
-            switch (descripcionEnfermedad){
+            switch (descripcionEnfermedad) {
                 case 1:
                     descripcion = "Parvovirus (gastroenteritis hemorrágica)";
                     break;
@@ -169,7 +169,7 @@ public class Mascota {
                     break;
             }
         } else {
-            switch (descripcionEnfermedad){
+            switch (descripcionEnfermedad) {
                 case 1:
                     descripcion = "Falla o insuficiencia de los riñones";
                     break;
@@ -237,13 +237,13 @@ public class Mascota {
         System.out.println("\nEstado: " + estadom);
     }
 
-    public static void mEspecie(){
+    public static void mEspecie() {
         System.out.println("\n\n--- ESPECIE DE LA MASCOTA ---");
         System.out.println("\n1.Perro");
         System.out.println("\n2.Gato");
     }
 
-    public static void mEnfermedadesG(){
+    public static void mEnfermedadesG() {
         System.out.println("\n\n--- ENFERMEDADES GATOS ---");
         System.out.println("\n1.Falla o insuficiencia de los riñones");
         System.out.println("\n2.Cistitis, piedras o tapón urinario.");
@@ -257,7 +257,7 @@ public class Mascota {
         System.out.println("\n10.Diabetes o azúcar alta");
     }
 
-    public static void mEnfermedadesP(){
+    public static void mEnfermedadesP() {
         System.out.println("\n\n--- ENFERMEDADES PERROS ---");
         System.out.println("\n1.Parvovirus (gastroenteritis hemorrágica)");
         System.out.println("\n2.Moquillo");
@@ -276,7 +276,7 @@ public class Mascota {
         System.out.println("\n1. Poca energía (1 - 25)");
         System.out.println("\n2. Normal (26 - 50)");
         System.out.println("\n3. Alta energía (51 - 75)");
-        System.out.println("\n3. Mucha Energía (76 - 100)");
+        System.out.println("\n4. Mucha Energía (76 - 100)");
     }
 
     public static void mNivelSociabilidad() {
@@ -285,13 +285,6 @@ public class Mascota {
         System.out.println("\n1. Nada amigable (1 - 25)");
         System.out.println("\n2. Depende (26 - 50)");
         System.out.println("\n3. Amigable (51 - 75)");
-        System.out.println("\n3. Muy amigable (76 - 100)");
+        System.out.println("\n4. Muy amigable (76 - 100)");
     }
-
-    /*public void mEstadosM() {
-        System.out.println("\n\n--- ESTADO MASCOTA ---");
-        System.out.println("\n1. Disponible");
-        System.out.println("\n2. Adoptada");
-        System.out.println("\n3. Retirada");
-        }*/
 }

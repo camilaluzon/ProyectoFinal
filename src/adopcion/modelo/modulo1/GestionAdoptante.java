@@ -57,7 +57,7 @@ public class GestionAdoptante {
         // Asignar los atributos
         Adoptante nuevo = new Adoptante(
                 cedula, nombre, telefono, contrasena, tipoVivienda,
-                espacioInterior, espacioExterior, horasFueraCasa,
+                espacioInterior, espacioExterior, (int) horasFueraCasa,
                 experienciaMascotas, tipoMascota, presupuesto, hijos,
                 respuestaSeguridad
         );

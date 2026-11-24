@@ -5,13 +5,13 @@ import adopcion.utilitario.Valida;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class CitaSeguimiento {
+public class CitaSeguimiento  {
     private String cedulaAdoptante;
     private String codigoMascota;
     private int tipoCita;
     private LocalDate fechaproximaCita;
     private LocalDate fechaCita;
-    private String observaciones="";
+    private String observaciones = "";
     private String estadoCita = "Sin programar";
 
     public CitaSeguimiento(String cedulaAdoptante, String codigoMascota, int tipoCita, LocalDate fechaCita, String observaciones) {
@@ -45,7 +45,7 @@ public class CitaSeguimiento {
 
     public void setTipoCita(int tipoCita) {
         this.tipoCita = tipoCita;
-        calcularProximaCita();//
+        calcularProximaCita();
     }
 
     public LocalDate getFechaCita() {
@@ -54,7 +54,7 @@ public class CitaSeguimiento {
 
     public void setFechaCita(LocalDate fechaCita) {
         this.fechaCita = fechaCita;
-        calcularProximaCita();//
+        calcularProximaCita();
     }
 
     public LocalDate getFechaproximaCita() {
@@ -90,10 +90,13 @@ public class CitaSeguimiento {
         return true;
     }
 
-    public CitaSeguimiento consultarCita(ArrayList<CitaSeguimiento> citas, String cedulaAdoptante, String codigoMascota, LocalDate fechaCita) {
+    public CitaSeguimiento consultarCita(ArrayList<CitaSeguimiento> citas, String cedulaAdoptante, String codigoMascota, String fechaCita) {
+        LocalDate fechaBuscada = LocalDate.parse(fechaCita);
 
         for (CitaSeguimiento cita : citas) {
-            if (cita.getCedulaAdoptante().equals(cedulaAdoptante) && cita.getCodigoMascota().equals(codigoMascota) && cita.getFechaCita().equals(fechaCita)) {
+            if (cita.getCedulaAdoptante().equals(cedulaAdoptante)
+                    && cita.getCodigoMascota().equals(codigoMascota)
+                    && cita.getFechaCita().equals(fechaBuscada)) {
                 System.out.println("\nCita encontrada");
                 System.out.println("\nFecha: " + cita.getFechaCita());
                 System.out.println("\nPróxima cita: " + cita.getFechaproximaCita());
@@ -188,6 +191,8 @@ public class CitaSeguimiento {
                 this.fechaproximaCita = this.fechaCita.plusMonths(3);
             } else if (this.tipoCita == 6) {
                 this.fechaproximaCita = this.fechaCita.plusMonths(6);
+            } else if (this.tipoCita == 12) {
+                this.fechaproximaCita = this.fechaCita.plusMonths(12);
             }
         }
     }

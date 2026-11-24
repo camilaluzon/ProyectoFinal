@@ -1,20 +1,16 @@
 package adopcion.modelo.modulo1;
 
-public class Adoptante {
-    // Atributos
-    private String cedula;
-    private String nombreCompleto;
-    private String telefono;
-    private String contrasena;
-    private int tipoVivienda;//* */
+public class Adoptante extends Persona {
+    // Atributos propios
+    private int tipoVivienda;
     private double espacioInterior;
     private double espacioExterior;
     private int horasFueraCasa;
-    private boolean experienciaMascotas;//* */
-    private int tipoMascotaAnterior;//* */
+    private boolean experienciaMascotas;
+    private int tipoMascotaAnterior;
     private double presupuesto;
     private int numeroHijos;
-    private int estadoPerfil;//* */
+    private int estadoPerfil;
     private String respuestaSeguridad;
 
     // Constructor
@@ -23,12 +19,8 @@ public class Adoptante {
                      double espacioInterior, double espacioExterior,
                      int horasFueraCasa, boolean experienciaMascotas,
                      int tipoMascotaAnterior, double presupuesto,
-                     int numeroHijos, String respuestaSeguridad){
-
-        this.cedula = cedula;
-        this.nombreCompleto = nombreCompleto;
-        this.telefono = telefono;
-        this.contrasena = contrasena;
+                     int numeroHijos, String respuestaSeguridad) {
+        super(cedula, nombreCompleto, telefono, contrasena);
         this.tipoVivienda = tipoVivienda;
         this.espacioInterior = espacioInterior;
         this.espacioExterior = espacioExterior;
@@ -42,23 +34,7 @@ public class Adoptante {
     }
 
     // Getters
-    public String getCedula() {
-        return cedula;
-    }
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public int getTipoVivienda(){
+    public int getTipoVivienda() {
         return tipoVivienda;
     }
 
@@ -99,23 +75,6 @@ public class Adoptante {
     }
 
     // Setters
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
     public void setTipoVivienda(int tipoVivienda) {
         this.tipoVivienda = tipoVivienda;
     }
@@ -158,7 +117,6 @@ public class Adoptante {
 
     // Método para mostrar información
     public void mostrarInformacion() {
-
         System.out.println("\n\n--- PERFIL DEL ADOPTANTE ---");
         System.out.println("Cédula: " + cedula);
         System.out.println("Nombre: " + nombreCompleto);
@@ -207,17 +165,15 @@ public class Adoptante {
     }
 
     public static void mVivienda() {
-
         System.out.println("\n\n--- TIPO DE VIVIENDA ---");
-        System.out.println("\n1.Departamento");
-        System.out.println("\n2.Casa");
-        System.out.println("\n3.Hacienda");
+        System.out.println("1. Casa");
+        System.out.println("2. Departamento");
+        System.out.println("3. Hacienda");
     }
 
     public static void mMascota() {
-
         System.out.println("\n\n--- TIPO DE MASCOTA ---");
-        System.out.println("\n1.Perro");
-        System.out.println("\n2.Gato");
+        System.out.println("1. Perro");
+        System.out.println("2. Gato");
     }
 }

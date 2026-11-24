@@ -20,7 +20,6 @@ public class AceptacionTermino {
         return cedulaAdoptante;
     }
 
-
     public void setCedulaAdoptante(String cedulaAdoptante) {
         this.cedulaAdoptante = cedulaAdoptante;
     }
