@@ -4,6 +4,8 @@ import adopcion.modelo.modulo1.Adoptante;
 import adopcion.modelo.modulo2.Mascota;
 import adopcion.utilitario.Lista;
 import adopcion.utilitario.Valida;
+
+import java.time.LocalDate;
 import java.time.Year;
 
 public class Vacuna {
@@ -17,6 +19,7 @@ public class Vacuna {
     private boolean estado;
     private String motivoEliminacion;
     private Mascota mascota;
+    private LocalDate fechaProximaDosis;
 
     // Constructor vacío
     public Vacuna() {
@@ -99,7 +102,42 @@ public class Vacuna {
         this.motivoEliminacion = motivoEliminacion;
     }
 
+    public LocalDate getFechaProximaDosis() {
+        return fechaProximaDosis;
+    }
+
+    public void setFechaProximaDosis(LocalDate fechaProximaDosis) {
+        this.fechaProximaDosis = fechaProximaDosis;
+    }
+
     // Métodos UML
+
+    public static String seleccionarVacuna(Mascota mascota) {
+
+        int opcion;
+
+        if (mascota.getEspecie() == 1) {
+
+            mVacunasP();
+
+            opcion = Valida.leerIntervalo("\nSeleccione una vacuna", 1, 4);
+
+            if (opcion == 1) return "Polivalente canina";
+            if (opcion == 2) return "Rabia";
+            if (opcion == 3) return "Leptospirosis";
+
+        } else if (mascota.getEspecie() == 2) {
+
+            mVacunasG();
+
+            opcion = Valida.leerIntervalo("\nSeleccione una vacuna:", 1, 3);
+
+            if (opcion == 1) return "Triple felina";
+            if (opcion == 2) return "Rabia";
+        }
+
+        return Valida.leerString("\nIngrese el nombre de la vacuna adicional:");
+    }
 
     public void registrarVacuna() {
 
@@ -112,12 +150,13 @@ public class Vacuna {
             return;
         }
 
-        // Solicitar nombre de la vacuna
-        String nombreVacuna = Valida.leerString("\nIngrese el nombre de la vacuna");
+        String nombreVacuna = seleccionarVacuna(mascota);
 
         int fechaAplicacion = Valida.leerIntervalo("\nIngrese el año de aplicación:",2001,Year.now().getValue());
 
-        int fechaRefuerzo = Valida.leerIntervalo("\nIngrese el año de refuerzo:",fechaAplicacion,fechaAplicacion+1);
+        LocalDate proximaDosis = LocalDate.now().plusMonths(3);
+
+        int fechaRefuerzo = proximaDosis.getYear();
 
         String observacion = Valida.leerObservaciones("\nIngrese una observación");
 
@@ -142,10 +181,12 @@ public class Vacuna {
                 observacion
         );
 
+        nuevaVacuna.setFechaProximaDosis(proximaDosis);
         Lista.getVacunas().add(nuevaVacuna);
 
         System.out.println("\nLa vacuna fue registrada correctamente.");
         System.out.println("El historial médico se actualizó correctamente.");
+        System.out.println("Próxima dosis programada para: " + proximaDosis);
     }
 
     public static void consultarVacuna() {
@@ -269,6 +310,22 @@ public class Vacuna {
 
         String motivo = Valida.leerObservaciones("\nIngrese el motivo de eliminación");
 
+    }
+
+    public static void mVacunasP(){
+        System.out.println("\n --- VACUNAS ESENCIALES PARA PERROS ---");
+        System.out.println("1. Polivalente canina (Moquillo, Adenovirus y Parvovirus)");
+        System.out.println("2. Rabia");
+        System.out.println("3. Leptospirosis");
+        System.out.println("4. Agregar otra vacuna (Extra)");
+    }
+
+    public static void mVacunasG(){
+        System.out.println("\n --- VACUNAS ESENCIALES PARA PERROS ---");
+        System.out.println("1. Polivalente canina (Moquillo, Adenovirus y Parvovirus)");
+        System.out.println("2. Rabia");
+        System.out.println("3. Leptospirosis");
+        System.out.println("4. Agregar otra vacuna (Extra)");
     }
 
     public void mostrarInformacionVacunas() {
