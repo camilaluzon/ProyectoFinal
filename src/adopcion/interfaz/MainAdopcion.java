@@ -19,7 +19,7 @@ import java.util.Scanner;
 //Main
 
 public class MainAdopcion {
-    static void main() {
+    static void main(String[] args) {
         Lista.cargarDatosPrueba();
 
         GestionAdoptante gestionAdoptante = new GestionAdoptante();
