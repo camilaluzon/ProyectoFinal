@@ -121,7 +121,8 @@ public class Mascota {
         this.motivoEliminacion = motivoEliminacion;
     }
 
-    public void mostarInformacion(){
+    public void mostrarInformacion(){
+        String especiem;
         System.out.println("\nNombre: " + nombre);
         if (especie == 1) {
             especiem = "Perro";
@@ -133,7 +134,7 @@ public class Mascota {
         System.out.println("\nTamaño aproximado: " + tamanoAproximado + "cm");
         String presencia = presenciaEnfermedades ? "Sí" : "No";
         System.out.println("\nPresencia de enfermedades: " + presencia);
-        String descripcion;
+        String descripcion = "";
         if (especie == 1) {
             switch (descripcionEnfermedad){
                 case 1:
@@ -201,7 +202,7 @@ public class Mascota {
                     break;
             }
         }
-        System.out.println("Descripcion de enfermedad: " + tipoMascota);
+        System.out.println("Descripcion de enfermedad: " + descripcion);
         String nievele;
         if (nivelEnergia == 1) {
             nievele = "Poca energía";
@@ -215,11 +216,11 @@ public class Mascota {
 
         System.out.println("\nNivel de energía: " + nievele);
         String nievels;
-        if (NivelSociabilidad == 1) {
+        if (nivelSociabilidad == 1) {
             nievels = "Nada amigable";
-        } else if (NivelSociabilidad == 2) {
+        } else if (nivelSociabilidad == 2) {
             nievels = "Depende";
-        } else if (NivelSociabilidad == 3) {
+        } else if (nivelSociabilidad == 3) {
             nievels = "Amigable";
         } else {
             nievels = "Muy amigable";
@@ -229,14 +230,14 @@ public class Mascota {
         if (estado == 1) {
             estadom = "Disponible";
         } else if (estado == 2) {
-            estadom = "Adoptada"
+            estadom = "Adoptada";
         } else {
             estadom = "Retirada";
         }
         System.out.println("\nEstado: " + estadom);
     }
 
-    public void mEspecie(){
+    public static void mEspecie(){
         System.out.println("\n\n--- ESPECIE DE LA MASCOTA ---");
         System.out.println("\n1.Perro");
         System.out.println("\n2.Gato");
@@ -270,7 +271,7 @@ public class Mascota {
         System.out.println("\n10.Sobrepeso");
     }
 
-    public void mNivelEnergia() {
+    public static void mNivelEnergia() {
         System.out.println("\n\n--- NIVEL DE ENERGÍA ---");
         System.out.println("\n1. Poca energía (1 - 25)");
         System.out.println("\n2. Normal (26 - 50)");
@@ -278,7 +279,7 @@ public class Mascota {
         System.out.println("\n3. Mucha Energía (76 - 100)");
     }
 
-    public void mNivelSociabilidad() {
+    public static void mNivelSociabilidad() {
         System.out.println("\n\n--- NIVEL DE SOCIABILIDAD ---");
         System.out.println("\nSociabilidad se refiere a que tan amigable es la mascota con personas extrañas o niños");
         System.out.println("\n1. Nada amigable (1 - 25)");

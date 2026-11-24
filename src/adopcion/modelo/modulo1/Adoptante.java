@@ -19,34 +19,11 @@ public class Adoptante {
 
     // Constructor
     public Adoptante(String cedula, String nombreCompleto, String telefono,
-                     String contrasena, String tipoVivienda,
-                     double espacioInterior, double espacioExterior,
-                     double horasFueraCasa, boolean experienciaMascotas,
-                     double presupuesto, int numeroHijos) {
-
-        this.cedula = cedula;//get
-        this.nombreCompleto = nombreCompleto;//get,set
-        this.telefono = telefono;//get,set
-        this.contrasena = contrasena;//get,set
-        this.espacioInterior = espacioInterior;//get,set
-        this.espacioExterior = espacioExterior;//get,set
-        this.horasFueraCasa = horasFueraCasa;//get,set
-        this.presupuesto = presupuesto;//get,set
-        this.numeroHijos = numeroHijos;//get,set
-        this.respuestaSeguridad = respuestaSeguridad;//get,set
-    }
-
-    public Adoptante() {
-        this.estadoPerfil = 1;
-    }
-
-    // Constructor
-    public Adoptante(String cedula, String nombreCompleto, String telefono,
                      String contrasena, int tipoVivienda,
                      double espacioInterior, double espacioExterior,
                      double horasFueraCasa, boolean experienciaMascotas,
                      int tipoMascotaAnterior, double presupuesto,
-                     int numeroHijos, String respuestaSeguridad) {
+                     int numeroHijos, String respuestaSeguridad){
 
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;

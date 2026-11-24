@@ -1,6 +1,7 @@
 package adopcion.modelo.modulo4;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class AceptacionTermino {
     private String cedulaAdoptante;
@@ -8,15 +9,17 @@ public class AceptacionTermino {
     private boolean aceptacionTerminos;
     private String fechaAceptacion;
 
-    public AceptacionTermino(String cedulaAdoptante, String codigoMascota, String fechaAceptacion) {
+    public AceptacionTerminos(String cedulaAdoptante, String codigoMascota, String versionTerminos) {
         this.cedulaAdoptante = cedulaAdoptante;
         this.codigoMascota = codigoMascota;
-        this.fechaAceptacion = fechaAceptacion;
+        this.fechaAceptacion = LocalDateTime.now().toString();
+        this.aceptacionTerminos = false;
     }
 
     public String getCedulaAdoptante() {
         return cedulaAdoptante;
     }
+
 
     public void setCedulaAdoptante(String cedulaAdoptante) {
         this.cedulaAdoptante = cedulaAdoptante;
@@ -40,10 +43,6 @@ public class AceptacionTermino {
 
     public String getFechaAceptacion() {
         return fechaAceptacion;
-    }
-
-    public void setFechaAceptacion(String fechaAceptacion) {
-        this.fechaAceptacion = fechaAceptacion;
     }
 
     public void registrarAceptacion(String respuesta) {

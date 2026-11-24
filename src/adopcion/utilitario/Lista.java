@@ -3,13 +3,15 @@ package adopcion.utilitario;
 import java.util.ArrayList;
 import adopcion.modelo.modulo1.Adoptante;
 import adopcion.modelo.modulo2.Mascota;
+import adopcion.modelo.modulo4.AceptacionTermino;
+import adopcion.modelo.modulo5.Vacuna;
 
 public class Lista {
     // Listas únicas compartidas por todo el programa
     private static ArrayList<Adoptante> adoptantes = new ArrayList<>();
     private static ArrayList<Mascota> mascotas = new ArrayList<>();
-    // private ArrayList<Vacuna> vacunas = new ArrayList<>();
-    // private ArrayList<AceptacionTerminos> adopciones = new ArrayList<>();
+    private static ArrayList<Vacuna> vacunas = new ArrayList<>();
+    private static ArrayList<AceptacionTermino> adopciones = new ArrayList<>();
     // private ArrayList<Devoluciones> devoluciones = new ArrayList<>();
 
     // Getters para que cualquier módulo acceda a las listas
@@ -19,6 +21,14 @@ public class Lista {
 
     public static ArrayList<Mascota> getMascotas() {
         return mascotas;
+    }
+
+    public static ArrayList<AceptacionTermino> getAdopciones() {
+        return adopciones;
+    }
+
+    public static ArrayList<Vacuna> getVacunas() {
+        return vacunas;
     }
 
     // Métodos de búsqueda centralizados (así no los repiten en cada clase)
@@ -33,10 +43,47 @@ public class Lista {
 
     public static Mascota buscarMascota(String codigo) {
         for (Mascota m : mascotas) {
-            if (m.getCodigo().equalsIgnoreCase(codigo)) {
+            if (m.getCodigoM().equalsIgnoreCase(codigo)) {
                 return m;
             }
         }
+        return null;
+    }
+
+    public static Vacuna buscarVacuna(Mascota mascota, String nombreVacuna, int fechaAplicacion) {
+
+        for (Vacuna v : vacunas) {
+
+            if (v.getMascota().getCodigo().equalsIgnoreCase(mascota.getCodigo()) &&
+                    v.getNombreVacuna().equalsIgnoreCase(nombreVacuna) &&
+                    v.getFechaAplicacion() == fechaAplicacion) {
+
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public static Vacuna buscarVacunaPorId(String idVacuna) {
+
+        for (Vacuna v : vacunas) {
+            if (v.getIdVacuna().equalsIgnoreCase(idVacuna)) {
+                return v;
+            }
+        }
+
+        return null;
+    }
+
+    public static Adoptante buscarAdoptanteMascota(String codigoMascota) {
+
+        for (AceptacionTermino a : adopciones) {
+
+            if (a.getCodigoMascota().equalsIgnoreCase(codigoMascota)) {
+                return buscarAdoptante(a.getCedulaAdoptante());
+            }
+        }
+
         return null;
     }
 
@@ -71,12 +118,12 @@ public class Lista {
 
             // Perros (especie 1)
             mascotas.add(new Mascota(
-                    "Max", 1, 4, 55.0,
+                    "Max", 1, 4, 55,
                     false, 0, 3, 3
             ));
 
             mascotas.add(new Mascota(
-                    "Rocky", 1, 2, 30.0,
+                    "Rocky", 1, 2, 30,
                     true, 3, 2, 2
             ));
 
@@ -95,3 +142,4 @@ public class Lista {
         System.out.println("Datos de prueba cargados correctamente.");
     }
 }
+

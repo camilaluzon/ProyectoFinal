@@ -89,6 +89,11 @@ public class GestionAdoptante {
     // Actualizar adoptante
     public void actualizarAdoptante() {
 
+        if (Lista.getAdoptantes().isEmpty()) {
+            System.out.println("\nNo existen adoptantes registrados en el sistema.");
+            return;
+        }
+
         System.out.println("\n--- ACTUALIZAR PERFIL DEL ADOPTANTE ---");
 
         // Buscar al adoptante que se desea actualizar
