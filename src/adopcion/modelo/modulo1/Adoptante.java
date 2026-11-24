@@ -1,5 +1,8 @@
 package adopcion.modelo.modulo1;
 
+import adopcion.utilitario.Lista;
+import adopcion.utilitario.Valida;
+
 public class Adoptante extends Persona {
     // Atributos propios
     private int tipoVivienda;

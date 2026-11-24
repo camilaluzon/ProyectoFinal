@@ -208,13 +208,13 @@ public class GestionAdoptante {
 
         if (adoptante == null) {
             System.out.println("\nNo estás registrado. Por favor, registrar usuario.");
-            return adoptante;
+            return null;
         }
 
         // Verificar primero si el perfil está activo
         if (adoptante.getEstadoPerfil() != 1) {
             System.out.println("\nError: Tu perfil se encuentra inactivo o inhabilitado. No puedes ingresar al sistema.");
-            return adoptante;
+            return null;
         }
 
         String contrasena;
