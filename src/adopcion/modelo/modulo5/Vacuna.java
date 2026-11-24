@@ -1,6 +1,9 @@
 package adopcion.modelo.modulo5;
 
+import adopcion.modelo.modulo2.Mascota;
+
 import java.util.ArrayList;
+
 
 public class Vacuna {
     private String idVacuna;
@@ -8,20 +11,20 @@ public class Vacuna {
     private int fechaAplicacion;
     private int fechaRefuerzo;
     private String observacion;
-    private String estado;
+    private boolean estado;
     private String motivoEliminacion;
 
     public Vacuna() {
     }
 
     public Vacuna(String idVacuna, String nombreVacuna, int fechaAplicacion,
-                  int fechaRefuerzo, String observacion, String estado) {
+                  int fechaRefuerzo, String observacion) {
         this.idVacuna = idVacuna;
         this.nombreVacuna = nombreVacuna;
         this.fechaAplicacion = fechaAplicacion;
         this.fechaRefuerzo = fechaRefuerzo;
         this.observacion = observacion;
-        this.estado = estado;
+        this.estado = false;
         this.motivoEliminacion = "";
     }
 
@@ -71,7 +74,7 @@ public class Vacuna {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
@@ -85,7 +88,7 @@ public class Vacuna {
 
     // Métodos UML
 
-    public String registrarVacuna(Mascota mascota) {
+    public String registrarVacuna(Mascota m) {
         return "Vacuna registrada correctamente para la mascota "
                 + m.getCodigoMascota();
     }
@@ -102,8 +105,8 @@ public class Vacuna {
     }
 
     public boolean eliminarVacunaLogico(String motivo) {
-        this.estado = "Eliminada";
-        this.motivoEliminacion = motivo;
+        estado = false;
+        motivoEliminacion = motivo.leerObservaciones("Ingrese motivo de eliminación");
         return true;
     }
 

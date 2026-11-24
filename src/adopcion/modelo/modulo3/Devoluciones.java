@@ -14,12 +14,12 @@ public class Devoluciones {
     private Adoptante adoptante;
     private Mascota mascota;
 
-    public Devoluciones() {
+    public Devoluciones(Adoptante adoptante, Mascota mascota,String motivoDe) {
         this.adoptante = adoptante;
         this.mascota = mascota;
         this.fechaDe = fechaDe;
         this.motivoDe = motivoDe;
-        this.nivelGra = nivelGra;
+        this.nivelGra = 1;
     }
 
     public String getCodigoDe() {
@@ -40,7 +40,7 @@ public class Devoluciones {
 
     public void setMotivoDe(String motivoDe) {
         this.motivoDe = motivoDe;
-        this.nivelGra = nivelGra;
+        this.nivelGra = 1 ;
     }
 
     public int getNivelGra() {
@@ -59,28 +59,21 @@ public class Devoluciones {
         return mascota;
     }
 
-    public void mostrarMenu(Scanner sc) {
-        int opcion = -1;
-        while (opcion != 0) {
-            System.out.println("\nMwnu Devoluciones");
-            System.out.println("1. Registrar devolucion");
-            System.out.println("2. Ver historial");
-            System.out.println("0. Salir");
-            System.out.print("Elija una opcion: ");
-            opcion = sc.nextInt();
-            sc.nextLine();
-
-        }
+    public void mDevoluciones() {
+        System.out.println("\n\n --- MENU DEVOLUCIONES ---");
+        System.out.println("\n1. Registrar devolucion");
+        System.out.println("\n2. Ver historial");
+        System.out.println("\n3. Salir");
     }
 
     public void mostrarMotivos() {
-        System.out.println("Motivos permitidos:");
-        System.out.println("1. Maltrato o negligencia (Gravedad 5)");
-        System.out.println("2. Abandono o falta de cuidado (Gravedad 5)");
-        System.out.println("3. Agresividad grave (Gravedad 4)");
-        System.out.println("4. Incompatibilidad de convivencia (Gravedad 2)");
-        System.out.println("5. Mudanza o cambio de rutina (Gravedad 2)");
-        System.out.println("6. Problemas economicos (Gravedad 1)");
+        System.out.println("\n\n --- MOTIVOS ---");
+        System.out.println("\n 1. Maltrato o negligencia (Gravedad 5)");
+        System.out.println("\n 2. Abandono o falta de cuidado (Gravedad 5)");
+        System.out.println("\n 3. Agresividad grave (Gravedad 4)");
+        System.out.println("\n 4. Incompatibilidad de convivencia (Gravedad 2)");
+        System.out.println("\n 5. Mudanza o cambio de rutina (Gravedad 2)");
+        System.out.println("\n 6. Problemas economicos (Gravedad 1)");
     }
 
     public String obtenerMotivo(int numMotivo) {

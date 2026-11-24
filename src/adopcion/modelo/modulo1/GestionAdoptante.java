@@ -69,16 +69,20 @@ public class GestionAdoptante {
 
     // Consultar adoptante
     public void consultarAdoptante() {
+        // Comprobar si existen adoptantes registradas
+        if (Lista.getAdoptantes().isEmpty()) {
+            System.out.println("\nNo existen mascotas registradas en el sistema.");
+        }else{
+            System.out.println("\n--- CONSULTAR ADOPTANTE ---");
 
-        System.out.println("\n--- CONSULTAR ADOPTANTE ---");
+            String cedula = Valida.leerDiezDigitos("\nIngrese cédula a consultar");
+            Adoptante adoptante = Lista.buscarAdoptante(cedula);
 
-        String cedula = Valida.leerDiezDigitos("\nIngrese cédula a consultar");
-        Adoptante adoptante = Lista.buscarAdoptante(cedula);
-
-        if (adoptante == null) {
-            System.out.println("\nError: El adoptante no se encuentra registrado en el sistema.");
-        } else {
-            adoptante.mostrarInformacion();
+            if (adoptante == null) {
+                System.out.println("\nError: El adoptante no se encuentra registrado en el sistema.");
+            } else {
+                adoptante.mostrarInformacion();
+            }
         }
     }
 
@@ -134,7 +138,6 @@ public class GestionAdoptante {
         adoptante.setPresupuesto(presupuesto);
         adoptante.setNumeroHijos(hijos);
         adoptante.setRespuestaSeguridad(respuestaSeguridad);
-        adoptante.setEstadoPerfil(estadoPerfil);
 
         System.out.println("\nOperación exitosa. El perfil del adoptante se ha actualizado correctamente.");
     }
@@ -142,6 +145,7 @@ public class GestionAdoptante {
     // Eliminar perfil del adoptante
     public void eliminarAdoptante() {
 
+        System.out.println("\n--- ELIMINAR PERFIL ---");
         String cedula = Valida.leerDiezDigitos("\nIngrese cédula");
         Adoptante adoptante = Lista.buscarAdoptante(cedula);
 
@@ -150,8 +154,13 @@ public class GestionAdoptante {
             return;
         }
 
-        if (!adoptante.isEstadoPerfil()) {
-            System.out.println("\nError: El perfil del adoptante ya se encuentra inactivo.");
+        if (adoptante.getEstadoPerfil() == 2) {
+            System.out.println("\nError: El perfil ya se encuentra inactivo.");
+            return;
+        }
+
+        if (adoptante.getEstadoPerfil() == 3) {
+            System.out.println("\nError: El perfil se encuentra inhabilitado.");
             return;
         }
 
@@ -159,7 +168,7 @@ public class GestionAdoptante {
 
 
         if (confirmacion.equalsIgnoreCase("si")) {
-            adoptante.setEstadoPerfil(false);
+            adoptante.setEstadoPerfil(2);
             System.out.println("\nOperación exitosa. El perfil del adoptante ha sido desactivado correctamente.");
         } else {
             System.out.println("\nOperación cancelada. No se realizaron cambios.");
@@ -200,7 +209,7 @@ public class GestionAdoptante {
         }
 
         // Verificar primero si el perfil está activo
-        if (!adoptante.getEstadoPerfil().equalsIgnoreCase("Activo")) {
+        if (adoptante.getEstadoPerfil() != 1) {
             System.out.println("\nError: Tu perfil se encuentra inactivo o inhabilitado. No puedes ingresar al sistema.");
             return;
         }
@@ -224,8 +233,8 @@ public class GestionAdoptante {
         int opcion = 0;
         System.out.println("\n\nGESTIÓN DE ADOPTANTES");
         System.out.println("\n1. Registrar adoptante");
-        System.out.println("\n2. Iniciar sesión"");
-                System.out.println("\n3. Actualizar perfil");
+        System.out.println("\n2. Iniciar sesión");
+        System.out.println("\n3. Actualizar perfil");
         System.out.println("\n4. Eliminar perfil");
         System.out.println("\n5. Consultar Adoptante");
         System.out.println("\n6. Salir");

@@ -1,20 +1,27 @@
 package adopcion.modelo.modulo2;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+import adopcion.utilitario.Lista;
+import adopcion.utilitario.Valida;
+import adopcion.modelo.modulo1.Adoptante;
+import adopcion.modelo.modulo1.GestionAdoptante;
+
 public class Mascota {
     private static int contador = 1;
     private String codigom;
     private String nombre;
     private int especie;//
     private int edad;
-    private double tamanoAproximado;
+    private int tamanoAproximado;
     private boolean presenciaEnfermedades;
     private int descripcionEnfermedad;//
     private int nivelEnergia;//
     private int nivelSociabilidad;//
-    private boolean estado;
+    private int estado;
     private String motivoEliminacion;
 
-    public Mascota(String nombre, int especie, int edad, double tamanoAproximado,
+    public Mascota(String nombre, int especie, int edad, int tamanoAproximado,
                    boolean presenciaEnfermedades, int descripcionEnfermedad,
                    int nivelEnergia, int nivelSociabilidad) {
         this.codigom = "M" + contador++;
@@ -26,12 +33,12 @@ public class Mascota {
         this.descripcionEnfermedad = descripcionEnfermedad;
         this.nivelEnergia = nivelEnergia;
         this.nivelSociabilidad = nivelSociabilidad;
-        this.estado = true;
+        this.estado = 1;
         this.motivoEliminacion = " ";
     }
 
     public String getCodigoM() {
-        return codigo;
+        return codigom;
     }
 
     public String getNombre() {
@@ -42,11 +49,11 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public String getEspecie() {
+    public int getEspecie() {
         return especie;
     }
 
-    public void setEspecie(String especie) {
+    public void setEspecie(int especie) {
         this.especie = especie;
     }
 
@@ -58,11 +65,11 @@ public class Mascota {
         this.edad = edad;
     }
 
-    public double getTamanoAproximado() {
+    public int getTamanoAproximado() {
         return tamanoAproximado;
     }
 
-    public void setTamanoAproximado(double tamanoAproximado) {
+    public void setTamanoAproximado(int tamanoAproximado) {
         this.tamanoAproximado = tamanoAproximado;
     }
 
@@ -74,11 +81,11 @@ public class Mascota {
         this.presenciaEnfermedades = presenciaEnfermedades;
     }
 
-    public String getDescripcionEnfermedad() {
+    public int getDescripcionEnfermedad() {
         return descripcionEnfermedad;
     }
 
-    public void setDescripcionEnfermedad(String descripcionEnfermedad) {
+    public void setDescripcionEnfermedad(int descripcionEnfermedad) {
         this.descripcionEnfermedad = descripcionEnfermedad;
     }
 
@@ -98,20 +105,20 @@ public class Mascota {
         this.nivelSociabilidad = nivelSociabilidad;
     }
 
-    public boolean getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
     public String getMotivoEliminacion() {
-        return motivoRetiro;
+        return motivoEliminacion;
     }
 
     public void setMotivoEliminacion(String motivoEliminacion) {
-        this.motivoRetiro = motivoRetiro;
+        this.motivoEliminacion = motivoEliminacion;
     }
 
     public void mostarInformacion(){
@@ -205,6 +212,7 @@ public class Mascota {
         } else {
             nievele = "Mucha Energía";
         }
+
         System.out.println("\nNivel de energía: " + nievele);
         String nievels;
         if (NivelSociabilidad == 1) {
@@ -217,7 +225,15 @@ public class Mascota {
             nievels = "Muy amigable";
         }
         System.out.println("\nNivel de sociabilidad: " + nievels);
-        System.out.println("\nEstado: " + estado);
+        String estadom;
+        if (estado == 1) {
+            estadom = "Disponible";
+        } else if (estado == 2) {
+            estadom = "Adoptada"
+        } else {
+            estadom = "Retirada";
+        }
+        System.out.println("\nEstado: " + estadom);
     }
 
     public void mEspecie(){
@@ -226,7 +242,7 @@ public class Mascota {
         System.out.println("\n2.Gato");
     }
 
-    public void mEnfermedadesG(){
+    public static void mEnfermedadesG(){
         System.out.println("\n\n--- ENFERMEDADES GATOS ---");
         System.out.println("\n1.Falla o insuficiencia de los riñones");
         System.out.println("\n2.Cistitis, piedras o tapón urinario.");
@@ -240,7 +256,7 @@ public class Mascota {
         System.out.println("\n10.Diabetes o azúcar alta");
     }
 
-    public void mEnfermedadesP(){
+    public static void mEnfermedadesP(){
         System.out.println("\n\n--- ENFERMEDADES PERROS ---");
         System.out.println("\n1.Parvovirus (gastroenteritis hemorrágica)");
         System.out.println("\n2.Moquillo");
@@ -255,7 +271,6 @@ public class Mascota {
     }
 
     public void mNivelEnergia() {
-
         System.out.println("\n\n--- NIVEL DE ENERGÍA ---");
         System.out.println("\n1. Poca energía (1 - 25)");
         System.out.println("\n2. Normal (26 - 50)");
@@ -264,7 +279,6 @@ public class Mascota {
     }
 
     public void mNivelSociabilidad() {
-
         System.out.println("\n\n--- NIVEL DE SOCIABILIDAD ---");
         System.out.println("\nSociabilidad se refiere a que tan amigable es la mascota con personas extrañas o niños");
         System.out.println("\n1. Nada amigable (1 - 25)");
@@ -272,4 +286,11 @@ public class Mascota {
         System.out.println("\n3. Amigable (51 - 75)");
         System.out.println("\n3. Muy amigable (76 - 100)");
     }
+
+    /*public void mEstadosM() {
+        System.out.println("\n\n--- ESTADO MASCOTA ---");
+        System.out.println("\n1. Disponible");
+        System.out.println("\n2. Adoptada");
+        System.out.println("\n3. Retirada");
+        }*/
 }

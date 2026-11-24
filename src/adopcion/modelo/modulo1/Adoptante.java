@@ -122,6 +122,11 @@ public class Adoptante {
     }
 
     // Setters
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
